@@ -1,0 +1,162 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap");
+
+html,
+body {
+  height: 100%;
+  background-color: #eeeeee;
+  font-family: "Poppins";
+}
+
+main {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#calculator {
+  border: 1px solid black;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: rgba(109, 109, 109, 0.411);
+}
+
+#calculator #display {
+  background-color: black;
+  border-radius: 5px;
+  padding: 20px 10px;
+  margin-bottom: 20px;
+}
+
+#calculator #display #display-content {
+  display: block;
+  font-size: 40px;
+  color: white;
+  text-align: end;
+}
+
+#calculator #buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  grid-template-areas:
+    "clear clear delete delete "
+    "btn7 btn8 btn9 division"
+    "btn4 btn5 btn6 multiplication"
+    "btn1 btn2 btn3 subtraction"
+    "point btn0 equals addition";
+}
+
+#calculator .button {
+  font-family: "Poppins";
+  --operator-btn: rgb(255, 0, 0);
+  --number-btn: rgba(0, 255, 200, 0.836);
+  padding: 10px;
+  font-size: 35px;
+  background-color: rgba(78, 76, 76, 0.541);
+  color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+#calculator #buttons .button.number:hover {
+  background-color: var(--number-btn);
+  color: #000;
+}
+
+#calculator #buttons .button.operator:hover {
+  background-color: var(--operator-btn);
+  color: #000;
+}
+
+#calculator #buttons #btn-clear {
+  grid-area: clear;
+}
+
+#calculator #buttons #btn-clear:hover {
+  background-color: rgb(255, 136, 0);
+  color: #000;
+}
+
+#calculator #buttons #btn-delete {
+  grid-area: delete;
+}
+
+#calculator #buttons #btn-delete:hover {
+  background-color: rgb(255, 136, 0);
+  color: #000;
+}
+
+#calculator #buttons #btn-0 {
+  grid-area: btn0;
+}
+
+#calculator #buttons #btn-1 {
+  grid-area: btn1;
+}
+
+#calculator #buttons #btn-2 {
+  grid-area: btn2;
+}
+
+#calculator #buttons #btn-3 {
+  grid-area: btn3;
+}
+
+#calculator #buttons #btn-4 {
+  grid-area: btn4;
+}
+
+#calculator #buttons #btn-5 {
+  grid-area: btn5;
+}
+
+#calculator #buttons #btn-6 {
+  grid-area: btn6;
+}
+
+#calculator #buttons #btn-7 {
+  grid-area: btn7;
+}
+
+#calculator #buttons #btn-8 {
+  grid-area: btn8;
+}
+
+#calculator #buttons #btn-9 {
+  grid-area: btn9;
+}
+
+#calculator #buttons #btn-division {
+  grid-area: division;
+}
+
+#calculator #buttons #btn-multiplication {
+  grid-area: multiplication;
+}
+
+#calculator #buttons #btn-subtraction {
+  grid-area: subtraction;
+}
+
+#calculator #buttons #btn-addition {
+  grid-area: addition;
+}
+
+#calculator #buttons #btn-point {
+  grid-area: point;
+}
+
+#calculator #buttons #btn-point:hover {
+  background-color: gold;
+  color: #000;
+}
+
+#calculator #buttons #btn-equals {
+  grid-area: equals;
+}
+
+#calculator #buttons #btn-equals:hover {
+  background-color: rgb(8, 243, 20);
+  color: #000;
+}
