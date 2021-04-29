@@ -15,6 +15,7 @@ main {
 }
 
 #calculator {
+  width: 350px;
   border: 1px solid black;
   padding: 20px;
   border-radius: 10px;
@@ -26,13 +27,13 @@ main {
   border-radius: 5px;
   padding: 20px 10px;
   margin-bottom: 20px;
+  text-align: right;
 }
 
 #calculator #display #display-content {
-  display: block;
+  display: inline-block;
   font-size: 40px;
   color: white;
-  text-align: end;
 }
 
 #calculator #buttons {
@@ -49,8 +50,9 @@ main {
 
 #calculator .button {
   font-family: "Poppins";
-  --operator-btn: rgb(255, 0, 0);
-  --number-btn: rgba(0, 255, 200, 0.836);
+  --operator-btn: rgb(255, 136, 0);
+
+  --number-btn: rgba(25, 0, 255, 0.836);
   padding: 10px;
   font-size: 35px;
   background-color: rgba(78, 76, 76, 0.541);
@@ -74,7 +76,7 @@ main {
 }
 
 #calculator #buttons #btn-clear:hover {
-  background-color: rgb(255, 136, 0);
+  background-color: rgb(255, 0, 0);
   color: #000;
 }
 
@@ -83,7 +85,7 @@ main {
 }
 
 #calculator #buttons #btn-delete:hover {
-  background-color: rgb(255, 136, 0);
+  background-color: rgb(255, 0, 0);
   color: #000;
 }
 
