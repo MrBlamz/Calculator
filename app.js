@@ -34,98 +34,151 @@ function operate(operator, firstNum, secondNum) {
     "/": divide(firstNum, secondNum),
   };
 
-  // Rounds the result to 2 decimal places if number is a Float
+  // Rounds the result to 2 decimal places if result is a Float
   return Math.round(operations[operator] * 100) / 100;
 }
-// Updates display DOM element
+
+// Updates calculator display
 function updateDisplay(content) {
-  display.textContent = content;
+  content ? (display.textContent = content) : (display.textContent = "0");
 }
 
-// Appends button value to operation
-function appendNumber() {
-  input += this.textContent;
-  updateDisplay(input);
+function appendNumber(number) {
+  input += number;
 }
 
-function appendOperator() {
+function inputIsInvalid() {
+  if (!input) {
+    return true;
+  }
+
   const lastChar = input[input.length - 1];
 
-  if (lastChar === operator) {
-    return;
+  if (lastChar === operator || lastChar === ".") {
+    return true;
   }
 
-  if (isNaN(parseFloat(input))) {
-    return;
+  if (!parseFloat(input)) {
+    return true;
   }
 
-  if (operator !== null) {
-    doOperation();
-  }
-
-  operator = this.textContent;
-  input += operator;
-  updateDisplay(input);
+  return false;
 }
 
-function appendDecimal() {
+function appendOperator(operatorType) {
+  if (inputIsInvalid()) {
+    return;
+  }
+
+  operator = operatorType;
+  input += operator;
+}
+
+function appendPoint() {
   if (hasDecimal) {
     return;
   }
 
-  input += this.textContent;
+  input += ".";
   hasDecimal = true;
-  updateDisplay(input);
 }
 
-// Clears input
-function clearOperation() {
+// Sets variables to their starting values
+function clearInput() {
   input = "";
   operator = null;
   hasDecimal = false;
-  updateDisplay("0");
 }
 
-// Delete last char from stored operation
+// Delete last char from input
 function deleteLastChar() {
   const lastChar = input[input.length - 1];
 
-  if (lastChar === operator) {
-    operator = null;
+  switch (lastChar) {
+    case operator:
+      operator = null;
+      break;
+    case ".":
+      hasDecimal = false;
+      break;
+    default:
+      break;
   }
 
-  if (lastChar === ".") {
-    hasDecimal = false;
-  }
-
+  // Removes last char from input
   input = input.slice(0, input.length - 1);
-
-  if (input.length === 0) {
-    updateDisplay("0");
-    return;
-  }
-
-  updateDisplay(input);
 }
 
 function doOperation() {
-  if (operator === null) {
-    return;
-  }
-
-  const lastChar = input[input.length - 1];
-  if (lastChar === operator || lastChar === ".") {
-    return;
-  }
-
   const firstOperand = parseFloat(input.split(operator)[0]);
   const secondOperand = parseFloat(input.split(operator)[1]);
-  let result = operate(operator, firstOperand, secondOperand);
+  return operate(operator, firstOperand, secondOperand);
+}
 
-  if (isNaN(result) || result === Infinity) {
-    input = "";
-    operator = null;
-    hasDecimal = false;
+function resultIsInvalid(result) {
+  if (!result || result === Infinity) {
+    return true;
+  }
+
+  return false;
+}
+
+numberButtons.forEach((numberBtn) =>
+  numberBtn.addEventListener("click", () => {
+    appendNumber(numberBtn.textContent);
+    updateDisplay(input);
+  })
+);
+
+operatorButtons.forEach((operatorBtn) =>
+  operatorBtn.addEventListener("click", () => {
+    if (operator && !inputIsInvalid()) {
+      const result = doOperation();
+
+      if (resultIsInvalid(result)) {
+        clearInput();
+        updateDisplay("Math ERROR");
+        return;
+      }
+
+      operator = operatorBtn.textContent;
+      input = result.toString();
+      updateDisplay(input);
+    }
+
+    appendOperator(operatorBtn.textContent);
+    updateDisplay(input);
+  })
+);
+
+pointButton.addEventListener("click", () => {
+  appendPoint();
+  updateDisplay(input);
+});
+
+clearButton.addEventListener("click", () => {
+  clearInput();
+  updateDisplay("0");
+});
+
+deleteButton.addEventListener("click", () => {
+  deleteLastChar();
+  updateDisplay(input);
+});
+
+equalsButton.addEventListener("click", () => {
+  if (!operator) {
+    return;
+  }
+
+  if (inputIsInvalid()) {
+    return;
+  }
+
+  const result = doOperation();
+
+  if (resultIsInvalid(result)) {
+    clearInput();
     updateDisplay("Math ERROR");
     return;
   }
@@ -133,17 +186,4 @@ function doOperation() {
   operator = null;
   input = result.toString();
   updateDisplay(input);
-}
-
-numberButtons.forEach((button) =>
-  button.addEventListener("click", appendNumber)
-);
-
-operatorButtons.forEach((button) =>
-  button.addEventListener("click", appendOperator)
-);
-
-pointButton.addEventListener("click", appendDecimal);
-clearButton.addEventListener("click", clearOperation);
-deleteButton.addEventListener("click", deleteLastChar);
-equalsButton.addEventListener("click", doOperation);
+});
