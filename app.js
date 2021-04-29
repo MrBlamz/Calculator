@@ -187,3 +187,20 @@ equalsButton.addEventListener("click", () => {
   input = result.toString();
   updateDisplay(input);
 });
+
+// Add keyboard shortcuts
+window.addEventListener("keydown", (e) => {
+  const buttons = document.querySelectorAll(".button");
+
+  buttons.forEach((button) => {
+    if (button.textContent === e.key) {
+      button.click();
+    }
+    if (button.textContent === "=" && e.key === "Enter") {
+      button.click();
+    }
+    if (button.textContent === "Clear" && e.key === "Backspace") {
+      button.click();
+    }
+  });
+});
