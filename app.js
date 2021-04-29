@@ -123,8 +123,36 @@ function resultIsInvalid(result) {
   return false;
 }
 
+// Checks if user input will overflow display.
+// Returns a boolean
+function displayOverflows() {
+  const container = document.getElementById("display");
+
+  function getElementContentWidth(element) {
+    let styles = window.getComputedStyle(element);
+    let padding =
+      parseFloat(styles.paddingLeft) + parseFloat(styles.paddingRight);
+
+    return element.clientWidth - padding;
+  }
+
+  const widthAvailable =
+    getElementContentWidth(container) - getElementContentWidth(display);
+
+  return widthAvailable < 23;
+}
+
+function throwDisplayFullAlert() {
+  alert("Display cannot hold more characters!");
+}
+
 numberButtons.forEach((numberBtn) =>
   numberBtn.addEventListener("click", () => {
+    if (displayOverflows()) {
+      throwDisplayFullAlert();
+      return;
+    }
+
     appendNumber(numberBtn.textContent);
     updateDisplay(input);
   })
@@ -146,12 +174,22 @@ operatorButtons.forEach((operatorBtn) =>
       updateDisplay(input);
     }
 
+    if (displayOverflows()) {
+      throwDisplayFullAlert();
+      return;
+    }
+
     appendOperator(operatorBtn.textContent);
     updateDisplay(input);
   })
 );
 
 pointButton.addEventListener("click", () => {
+  if (displayOverflows()) {
+    throwDisplayFullAlert();
+    return;
+  }
+
   appendPoint();
   updateDisplay(input);
 });
