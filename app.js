@@ -116,7 +116,7 @@ function doOperation() {
 }
 
 function resultIsInvalid(result) {
-  if (!result || result === Infinity) {
+  if ((!result && result !== 0) || result === Infinity) {
     return true;
   }
 
