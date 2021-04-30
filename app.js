@@ -72,6 +72,7 @@ function appendOperator(operatorType) {
 
   operator = operatorType;
   input += operator;
+  hasDecimal = false;
 }
 
 function appendPoint() {
@@ -123,6 +124,11 @@ function resultIsInvalid(result) {
   return false;
 }
 
+// Checks if number is a floating point
+function isFloatingPoint(string) {
+  return string.includes(".");
+}
+
 // Checks if user input will overflow display.
 // Returns a boolean
 function displayOverflows() {
@@ -169,9 +175,7 @@ operatorButtons.forEach((operatorBtn) =>
         return;
       }
 
-      operator = operatorBtn.textContent;
       input = result.toString();
-      updateDisplay(input);
     }
 
     if (displayOverflows()) {
@@ -223,6 +227,7 @@ equalsButton.addEventListener("click", () => {
 
   operator = null;
   input = result.toString();
+  hasDecimal = isFloatingPoint(input) ? true : false;
   updateDisplay(input);
 });
 
